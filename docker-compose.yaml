@@ -35,6 +35,26 @@ services:
         # For local access, don't use certification
         command: "start-notebook.sh \
             --NotebookApp.password=${ACCESS_TOKEN}"
+    # rStudio
+    rstudio:
+        image: rocker/rstudio:3.6.2
+        volumes:
+            - ${RSTUDIO_WORKING_DIR}:/home/rstudio
+        ports:
+            # for shiny
+            - "3838:3838"
+            # for rstudio
+            - "8787:8787"
+        environment:
+            # no password required for local testing
+            DISABLE_AUTH: "true"
+            # adding shiny at installation; this takes time. 
+            # consider doing a custom docker image with shiny
+            # see https://hub.docker.com/r/rocker/rstudio/
+            # ADD: "shiny"
+            MSSQL_PASSWORD: ${MSSQL_PASSWORD}
+            MSSQL_USER: ${MSSQL_USER}
+            MSSQL_SERVERIP: ${MSSQL_SERVERIP}
     # # ES and Kibana for data sinc and visualization
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0

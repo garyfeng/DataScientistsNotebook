@@ -1,0 +1,11 @@
+checkpoint
+.rstudio
+.classpath
+.idea/
+.metadata
+.settings
+.project
+.version.properties
+target
+.DS_Store
+*.iml
