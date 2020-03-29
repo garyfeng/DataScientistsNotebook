@@ -1,0 +1,25 @@
+# Using MS SQL Server, 2017 on Ubuntu 16.04
+FROM mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04
+
+# Must accept the MS end user agreement
+ENV ACCEPT_EULA=Y
+
+# Set the root password to the SQL Server
+# This is commented out because we will use this docker file as part
+#  of the docker-compose env, where the password will be set. 
+# Uncomment this if you want to use this dockerfile by itself.
+# ENV SA_PASSWORD=mypassword
+
+WORKDIR /
+
+# Import data
+# Modified from https://github.com/twright-msft/mssql-node-docker-demo-app
+COPY entrypoint.sh /entrypoint.sh
+COPY import-data.sh /import-data.sh
+COPY Products.csv /Products.csv
+COPY setup.sql /setup.sql
+
+# Grant permissions for the import-data script to be executable
+RUN chmod +x /import-data.sh
+
+CMD /bin/bash /entrypoint.sh
