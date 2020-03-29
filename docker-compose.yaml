@@ -13,7 +13,7 @@ services:
             - "1433:1433"
         environment:
             ACCEPT_EULA: Y
-            SA_PASSWORD: ${SA_PASSWORD}
+            SA_PASSWORD: ${MSSQL_PASSWORD}
     # Jupyter Data Science Notebook
     jupyter:
         image: jupyter/datascience-notebook:latest
@@ -25,6 +25,10 @@ services:
         ports:
             - "${PORT}:8888"
         container_name:   jupyter_notebook
+        environment:
+            MSSQL_PASSWORD: ${MSSQL_PASSWORD}
+            MSSQL_USER: ${MSSQL_USER}
+            MSSQL_SERVERIP: ${MSSQL_SERVERIP}
         # command: "start-notebook.sh \
         #     --NotebookApp.password=${ACCESS_TOKEN} \
         #     --NotebookApp.certfile=/etc/ssl/notebook/jupyter.pem"
