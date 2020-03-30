@@ -35,9 +35,13 @@ services:
         # For local access, don't use certification
         command: "start-notebook.sh \
             --NotebookApp.password=${ACCESS_TOKEN}"
-    # rStudio
+    # RStudio, v3.6.1, with knitr and other libraries + shiny server
     rstudio:
-        image: rocker/rstudio:3.6.2
+        # image: rocker/rstudio:3.6.2
+        build:
+            context: ./R
+            dockerfile: Dockerfile
+        image: rstudio
         volumes:
             - ${RSTUDIO_WORKING_DIR}:/home/rstudio
         ports:
@@ -48,10 +52,6 @@ services:
         environment:
             # no password required for local testing
             DISABLE_AUTH: "true"
-            # adding shiny at installation; this takes time. 
-            # consider doing a custom docker image with shiny
-            # see https://hub.docker.com/r/rocker/rstudio/
-            # ADD: "shiny"
             MSSQL_PASSWORD: ${MSSQL_PASSWORD}
             MSSQL_USER: ${MSSQL_USER}
             MSSQL_SERVERIP: ${MSSQL_SERVERIP}

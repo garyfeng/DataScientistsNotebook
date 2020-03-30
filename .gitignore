@@ -9,3 +9,5 @@ checkpoint
 target
 .DS_Store
 *.iml
+.cache
+.bash_history
