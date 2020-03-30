@@ -11,3 +11,5 @@ target
 *.iml
 .cache
 .bash_history
+mssql_data
+

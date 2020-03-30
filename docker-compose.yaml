@@ -11,6 +11,9 @@ services:
         # tty: true    
         ports:
             - "1433:1433"
+        volumes: 
+            # we persist MSSQL data here
+            - ${MSSQL_PERSISTENT_DIR}:/var/opt/mssql
         environment:
             ACCEPT_EULA: Y
             SA_PASSWORD: ${MSSQL_PASSWORD}
